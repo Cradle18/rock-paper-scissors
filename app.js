@@ -25,6 +25,37 @@ function convertToWord(letter) {
     return "Scissors";
 }
 
+function gameOver(userScore, computerScore){
+    if (userScore === 5 || computerScore === 5) {
+        setTimeout(() => finishGame(userScore, computerScore));
+    }
+}
+
+function finishGame(userScore, computerScore) {
+    const gameChoices = document.querySelector(".choices");
+    gameChoices.classList.add("hidden");
+    const reset = document.getElementById("restart");
+    reset.classList.remove("hidden");
+    if (userScore > computerScore) {
+        result_p.innerHTML = `You beat Sheldon, Congrats!: ${userScore} - ${computerScore}`;
+    }
+    if (userScore < computerScore) {
+        result_p.innerHTML = `Sheldon wins! Poor game on your end.: ${userScore} - ${computerScore}`;
+    }
+
+    reset.addEventListener('click', () => restartGame());
+}
+
+function restartGame(){
+    userScore = 0;
+    computerScore = 0;
+    
+    const gameChoices = document.querySelector(".choices");
+    gameChoices.classList.remove("hidden");
+    const reset = document.getElementById("restart");
+    reset.classList.add("hidden");
+}
+
 function win(userChoice, computerChoice) {
     const userChoice_div = document.getElementById(userChoice);
     userScore++;
@@ -33,6 +64,7 @@ function win(userChoice, computerChoice) {
     result_p.innerHTML = `Your ${convertToWord(userChoice)} beats Sheldons ${convertToWord(computerChoice)} You win!`;
     userChoice_div.classList.add("green-glow");
     setTimeout(() => userChoice_div.classList.remove("green-glow"), 300);
+    gameOver(userScore, computerScore);
 }
 
 function lose(userChoice, computerChoice) {
@@ -42,6 +74,7 @@ function lose(userChoice, computerChoice) {
     result_p.innerHTML = `Sheldons ${convertToWord(computerChoice)} beats your ${convertToWord(userChoice)} You lose!`;
     userChoice_div.classList.add("red-glow");
     setTimeout(() => userChoice_div.classList.remove("red-glow"), 300);
+    gameOver(userScore, computerScore);
 }
 
 function draw(userChoice, computerChoice) {
