@@ -27,7 +27,7 @@ function convertToWord(letter) {
 
 function gameOver(userScore, computerScore){
     if (userScore === 5 || computerScore === 5) {
-        setTimeout(() => finishGame(userScore, computerScore));
+        finishGame(userScore, computerScore);
     }
 }
 
@@ -44,16 +44,22 @@ function finishGame(userScore, computerScore) {
     }
 
     reset.addEventListener('click', () => restartGame());
+
 }
 
 function restartGame(){
     userScore = 0;
     computerScore = 0;
     
+    result_p.innerHTML = "Play again? ";
+
     const gameChoices = document.querySelector(".choices");
     gameChoices.classList.remove("hidden");
     const reset = document.getElementById("restart");
     reset.classList.add("hidden");
+   
+    userScore_span.innerHTML = 0;
+    computerScore_span.innerHTML =0;
 }
 
 function win(userChoice, computerChoice) {
